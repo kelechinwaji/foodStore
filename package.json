@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon --exec babel-node server/server.js",
+    "start": "npm run clean && npm run build && node dist/server.js",
+    "build": "babel server --out-dir dist",
+    "clean": "rm -rf ./build ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
