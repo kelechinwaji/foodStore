@@ -6,7 +6,7 @@ const STATUS_CODES = {
     INTERNAL_ERROR: 500,
 };
 
-
+//App error 
 class AppError extends Error{
     constructor(
         name,
@@ -27,3 +27,14 @@ class AppError extends Error{
     }
 }
 
+// Api Errors
+class ApiError extends AppError {
+    constructor(
+        name,
+        statusCode = STATUS_CODES.INTERNAL_ERROR,
+        description = "Internal Server Error",
+        isOperational = true
+    ){
+        super(name, statusCode, description, isOperational);
+    }
+}
