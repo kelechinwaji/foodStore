@@ -76,5 +76,19 @@ class CustomerRepository {
                );
         }
     }
+
+    async wishlist(customerId){
+        try {
+            const profile = await CustomerModel.findById(customerId).populate("wishlist");
+
+            return profile.wishlist;
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Unable to Get wishlist"
+               );
+        }
+    }
 }
 
