@@ -46,4 +46,18 @@ class CustomerRepository {
                );
         }
     }
+
+    async FindCustomer({email}){
+        try {
+            const existingCustomer = await CustomerModel.findOne({ email: email});
+            return existingCustomer;
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Unable to Find Address"
+               );
+        }
+    }
 }
+
