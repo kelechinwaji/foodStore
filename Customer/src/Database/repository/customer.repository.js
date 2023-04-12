@@ -90,5 +90,44 @@ class CustomerRepository {
                );
         }
     }
+
+    async AddWishlistItems(customerId, product){
+        try {
+            const profile = await CustomerModel.findById(customerId).populate("wishlist");
+
+            if (profile){
+                let wishlist = profile.wishlist;
+
+                if (wishlist.length > 0){
+                    let isExist = false;
+                    wishlist.map((item) =>{
+                        if (item._id.toString() === product._id.toString()){
+                            const index = wishlist.indexOf(item);
+                            wishlist.splice(index, 1);
+                            isExist = true;
+                        }
+                    });
+
+                    if (!isExist){
+                        wishlist.push(product);
+                    }
+                } else{
+                    wishlist.push(product);
+                }
+
+                profile.wishlist = wishlist;
+            }
+
+            const profileResult = await profile.save();
+
+            return profileResult.wishlist;
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Unable to Add to wishlist"
+               );
+        }
+    }
 }
 
