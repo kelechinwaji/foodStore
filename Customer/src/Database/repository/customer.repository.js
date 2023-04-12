@@ -59,5 +59,22 @@ class CustomerRepository {
                );
         }
     }
+
+    async FindCustomerById({id}){
+        try {
+            const existingCustomer = await CustomerModel.findById(id)
+              .populate("address")
+              .populate("wishlist")
+              .populate("orders")
+              .populate("cart.product");
+            return existingCustomer;
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Unable to Find Customer"
+               );
+        }
+    }
 }
 
