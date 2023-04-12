@@ -23,4 +23,27 @@ class CustomerRepository {
            );
         }
     }
+
+    async CreateAddress({_id, street, postalCode, city, country}){
+        try {
+            const profile = await CustomerModel.findById(_id);
+
+            if (profile){
+                const newAddress = new AddressModel({
+                    street,
+                    postalCode,
+                    city,
+                    country,
+                });
+
+                await newAddress.save();
+            }
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Error on Create Address"
+               );
+        }
+    }
 }
