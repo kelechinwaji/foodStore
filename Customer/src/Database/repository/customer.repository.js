@@ -178,5 +178,33 @@ class CustomerRepository {
                );
         }
     }
+
+    async AddOrderToProfile(customerId, order){
+        try {
+            const profile = await CustomerModel.findById(customerId);
+
+            if(profile){
+                if(profile.orders == undefined){
+                    profile.orders = [];
+                }
+                profile.orders.push(order);
+
+                profile.cart = [];
+
+                const profileResult = await profile.save();
+
+                return profileResult;
+            }
+
+            throw new Error("Unable to add to order")
+        } catch (error) {
+            throw new ApiError(
+                "API Error",
+                STATUS_CODES.INTERNAL_ERROR,
+                "Unable to Add to order"
+               );
+        }
+    }
 }
 
+module.exports = CustomerRepository;
