@@ -11,3 +11,11 @@ module.exports.GenerateSalt = async () =>{
 module.exports.GeneratePassword = async (password, salt) =>{
     return await bcrypt.hash(password, salt);
 };
+
+module.exports.validatePassword = async (
+    enteredPassword,
+    savePassword,
+    salt
+)=>{
+    return (await this.GeneratePassword(enteredPassword, salt)) === savePassword
+};
