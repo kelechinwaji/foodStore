@@ -1,6 +1,6 @@
 const CustomerRepository = require("../Database/repository/customer.repository");
 const {ApiError, BadRequestError} = require('../utils/app-errors');
-const {FormateData, GeneratePassword, GenerateSalt, GenerateSignature, validatePassword, validatePassword} = require('../utils/index');
+const {FormateData, GeneratePassword, GenerateSalt, GenerateSignature, validatePassword} = require('../utils/index');
 
 // Business Logic
 class CustomerService{
@@ -16,9 +16,9 @@ class CustomerService{
             const existingCustomer = await this.repository.FindCustomer({email});
 
             if(existingCustomer){
-                const validatePassword = await validatePassword(password, existingCustomer.password, existingCustomer.salt);
+                const validatedPassword = await validatePassword(password, existingCustomer.password, existingCustomer.salt);
 
-                if(validatePassword){
+                if(validatedPassword){
                     const token = await GenerateSignature({email: existingCustomer.email, _id: existingCustomer._id})
 
                     return FormateData({id: existingCustomer._id, token});
