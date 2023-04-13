@@ -102,4 +102,13 @@ class CustomerService{
             throw new ApiError("Data Not Found", error) 
         }
     }
+
+    async ManageCart(customerId, product, qty, isRemove){
+        try {
+            const cartResult = await this.repository.AddCartItem(customerId, product, qty, isRemove);
+            return FormateData(cartResult);
+        } catch (error) {
+            throw new ApiError("Data Not Found", error) 
+        }
+    }
 }
