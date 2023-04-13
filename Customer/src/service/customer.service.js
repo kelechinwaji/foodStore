@@ -93,4 +93,13 @@ class CustomerService{
             throw new ApiError("Data Not Found", error) 
         }
     }
+
+    async AddToWishlist(customerId, product){
+        try {
+            const wishlistResult = await this.repository.AddWishlistItems(customerId, product);
+            return FormateData(wishlistResult);
+        } catch (error) {
+            throw new ApiError("Data Not Found", error) 
+        }
+    }
 }
