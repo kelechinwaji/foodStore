@@ -29,4 +29,22 @@ class CustomerService{
             throw new ApiError("Data Not Found", error)
         }
     }
+
+    async signUp(userInputs){
+        const {email, password, phone} = userInputs;
+
+        try {
+            let salt = await GenerateSalt();
+
+            let userPassword = await GeneratePassword(password, salt);
+
+            let existingCustomer = await this.repository.CreateCustomer({email, password: userPassword, phone, salt});
+
+            let token = await GenerateSignature({email: email, id: existingCustomer._id});
+
+            return FormateData({id: existingCustomer._id, token})
+        } catch (error) {
+            throw new ApiError("Data Not Found", error)
+        }
+    }
 }
