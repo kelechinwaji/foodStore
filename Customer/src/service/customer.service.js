@@ -9,7 +9,7 @@ class CustomerService{
         this.repository = new CustomerRepository;
     }
 
-    async signIn(userInputs){
+    async SignIn(userInputs){
         const {email, password} = userInputs;
 
         try {
@@ -30,7 +30,7 @@ class CustomerService{
         }
     }
 
-    async signUp(userInputs){
+    async SignUp(userInputs){
         const {email, password, phone} = userInputs;
 
         try {
@@ -61,7 +61,7 @@ class CustomerService{
 
     }
 
-    async getProfile(id){
+    async GetProfile(id){
         try {
             const existingCustomer = await this.repository.FindCustomerById(id);
 
@@ -71,7 +71,7 @@ class CustomerService{
         }
     }
 
-    async getShopingDetails(id){
+    async GetShopingDetails(id){
         try {
             const existingCustomer = await this.repository.FindCustomerById({id});
 
@@ -82,6 +82,15 @@ class CustomerService{
             return FormateData({msg: 'Error'})
         } catch (error) {
             throw new ApiError("Data Not Found", error)
+        }
+    }
+
+    async GetWishlist(customerId){
+        try {
+          const wishlistItems = await this.repository.wishlist(customerId);
+          return FormateData(wishlistItems)  
+        } catch (error) {
+            throw new ApiError("Data Not Found", error) 
         }
     }
 }
