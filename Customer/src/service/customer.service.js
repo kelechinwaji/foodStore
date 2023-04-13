@@ -70,4 +70,18 @@ class CustomerService{
             throw new ApiError("Data Not Found", error)
         }
     }
+
+    async getShopingDetails(id){
+        try {
+            const existingCustomer = await this.repository.FindCustomerById({id});
+
+            if(existingCustomer){
+                return FormateData(existingCustomer);
+            }
+
+            return FormateData({msg: 'Error'})
+        } catch (error) {
+            throw new ApiError("Data Not Found", error)
+        }
+    }
 }
