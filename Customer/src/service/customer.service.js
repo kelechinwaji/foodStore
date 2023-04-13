@@ -60,4 +60,14 @@ class CustomerService{
         }
 
     }
+
+    async getProfile(id){
+        try {
+            const existingCustomer = await this.repository.FindCustomerById(id);
+
+            return FormateData(existingCustomer);
+        } catch (error) {
+            throw new ApiError("Data Not Found", error)
+        }
+    }
 }
