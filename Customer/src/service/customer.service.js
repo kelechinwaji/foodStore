@@ -47,4 +47,17 @@ class CustomerService{
             throw new ApiError("Data Not Found", error)
         }
     }
+
+    async AddNewAddress(_id, userInputs){
+        const {street, postalCode, city, country} = userInputs;
+
+        try {
+            const addressResult = await this.repository.CreateAddress({_id, street, postalCode, city, country});
+
+            return FormateData(addressResult);
+        } catch (error) {
+            throw new ApiError("Data Not Found", error)
+        }
+
+    }
 }
