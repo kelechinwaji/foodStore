@@ -111,4 +111,13 @@ class CustomerService{
             throw new ApiError("Data Not Found", error) 
         }
     }
+
+    async ManageOrder(customerId, order){
+        try {
+            const orderResult = await this.repository.AddOrderToProfile(customerId, order);
+            return FormateData(orderResult);
+        } catch (error) {
+            throw new ApiError("Data Not Found", error) 
+        }
+    }
 }
