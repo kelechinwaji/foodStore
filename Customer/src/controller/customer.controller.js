@@ -35,4 +35,14 @@ class CustomerController {
             return res.json({status: false, data: error })
         }
     }
+
+    async profile ( req, res){
+        try {
+            const {_id} = req.user;
+            const {result} = await service.GetProfile({_id});
+            return res.json({status: true, data: result })
+        } catch (error) {
+            return res.json({status: false, data: error })
+        }
+    }
 }
