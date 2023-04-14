@@ -6,4 +6,5 @@ module.exports = (qpp) => {
     app.post("/customer/signup", customer.signUp);
     app.post("/customer/signin", customer.login);
     app.post("/customer/address", customer.address);
+    app.post("/customer/profile", customer.profile);
 }
