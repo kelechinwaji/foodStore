@@ -25,7 +25,7 @@ class AppError extends Error{
         Error.captureStackTrace(this);
     }
 }
-
+// Api Errors
 class ApiError extends AppError {
     constructor(
         name,
