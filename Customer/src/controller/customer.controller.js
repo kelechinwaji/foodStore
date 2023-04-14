@@ -46,7 +46,7 @@ class CustomerController {
         }
     }
 
-    async shoppingDetails (req, res){
+    async shopingDetails (req, res){
         try {
             const {_id} = req.user;
             const {result} = await service.GetShopingDetails({_id});
