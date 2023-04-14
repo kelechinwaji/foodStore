@@ -24,4 +24,15 @@ class CustomerController {
             return res.json({status: false, data: error })
         }
     }
+
+    async address (req, res){
+        try {
+           const {_id} = req.user;
+           const { street, postalCode, city, country } = req.body;
+           const {result} = await service.AddNewAddress(_id, {street, postalCode, city, country});
+           return res.json({status: true, data: result })
+        } catch (error) {
+            return res.json({status: false, data: error })
+        }
+    }
 }
