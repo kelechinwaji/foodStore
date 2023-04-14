@@ -45,4 +45,14 @@ class CustomerController {
             return res.json({status: false, data: error })
         }
     }
+
+    async shoppingDetails (req, res){
+        try {
+            const {_id} = req.user;
+            const {result} = await service.GetShopingDetails({_id});
+            return res.json({status: true, data: result })
+        } catch (error) {
+            return res.json({status: false, data: error })
+        }
+    }
 }
