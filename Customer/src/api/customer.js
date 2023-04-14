@@ -4,4 +4,5 @@ const UserAuth = require("./middleware/auth")
 module.exports = (qpp) => {
     const customer = new CustomerController();
     app.post("/customer/signup", customer.signUp);
+    app.post("/customer/signin", customer.login);
 }
