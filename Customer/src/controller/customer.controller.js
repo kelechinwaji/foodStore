@@ -55,4 +55,14 @@ class CustomerController {
             return res.json({status: false, data: error })
         }
     }
+
+    async wishlist (req, res){
+        try {
+            const {_id} = req.user;
+            const {result} = await service.GetWishlist({_id});
+            return res.json({status: true, data: result }) 
+        } catch (error) {
+            return res.json({status: false, data: error })
+        }
+    }
 }
