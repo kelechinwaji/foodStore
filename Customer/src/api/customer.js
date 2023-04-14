@@ -8,4 +8,5 @@ module.exports = (qpp) => {
     app.post("/customer/address", customer.address);
     app.post("/customer/profile", customer.profile);
     app.post("/customer/shoping-details", customer.shopingDetails);
+    app.post("/customer/wishlist", customer.wishlist);
 }
