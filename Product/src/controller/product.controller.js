@@ -23,4 +23,14 @@ class ProductController {
         return res.json({status: true, data: error})
     }
    }
+
+   async fetch(req, res){
+    const productId = req.params.id
+    try {
+        const result = await service.GetProductDescription(productId);
+        return res.json({status: true, data: result})
+    } catch (error) {
+        return res.json({status: true, data: error})
+    }
+   }
 }
