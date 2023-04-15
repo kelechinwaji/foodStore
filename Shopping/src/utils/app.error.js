@@ -64,3 +64,11 @@ class ValidationError extends AppError {
         );
     }
 }
+
+module.exports = {
+    AppError,
+    ApiError,
+    BadRequestError,
+    ValidationError,
+    STATUS_CODES,
+}
