@@ -17,4 +17,23 @@ class ProductService {
         throw new APIError('Data Not found')
        }
     }
+
+    async GetProducts(){
+        try {
+            const products = await this.repository.Products();
+
+            let categories = {};
+
+            products.map(({type}) =>{
+                categories[type] = type;
+            });
+
+            return FormateData({
+                products,
+                categories: Object.keys(categories)
+            })
+        } catch (error) {
+            throw new ApiError('Data Not found')
+        }
+    }
 }
