@@ -13,4 +13,14 @@ class ProductController {
         return res.json({status: true, data: error})
     }
    } 
+
+   async category(req, res){
+    const type = req.params.type;
+    try {
+        const result = await service.GetProductByCategory(type);
+        return res.json({status: true, data: result})
+    } catch (error) {
+        return res.json({status: true, data: error})
+    }
+   }
 }
