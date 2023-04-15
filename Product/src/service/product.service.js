@@ -45,4 +45,13 @@ class ProductService {
             throw new ApiError('Data Not found')
         }
     }
+
+    async GetProductByCategory(category){
+        try {
+            const products = await this.repository.FindByCategory(category);
+            return FormateData(products);
+        } catch (error) {
+            throw new ApiError('Data Not found')
+        }
+    }
 }
