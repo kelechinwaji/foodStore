@@ -36,4 +36,13 @@ class ProductService {
             throw new ApiError('Data Not found')
         }
     }
+
+    async GetProductDescription(productId){
+        try {
+           const product = await this.repository.FindById(productId);
+           return FormateData(product) 
+        } catch (error) {
+            throw new ApiError('Data Not found')
+        }
+    }
 }
