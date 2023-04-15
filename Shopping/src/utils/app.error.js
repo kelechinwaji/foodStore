@@ -37,3 +37,17 @@ class ApiError extends AppError {
         super(name, statusCode, description, isOperational);
     }
 }
+
+//400
+class BadRequestError extends AppError {
+    constructor(description = "Bad request", logingErrorResponse){
+        super(
+            "NOT FOUND",
+            STATUS_CODES.BAD_REQUEST,
+            description,
+            true,
+            false,
+            logingErrorResponse
+        );
+    }
+}
