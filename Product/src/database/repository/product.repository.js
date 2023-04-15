@@ -59,4 +59,17 @@ class ProductRepository {
           );
         }
       }
+
+      async FindByCategory(category){
+        try {
+          const products = await ProductModel.find({type: category});
+          return products;
+        } catch (error) {
+          throw new APIError(
+            "API Error",
+            STATUS_CODES.INTERNAL_ERROR,
+            "Unable to Find Category"
+          );
+        }
+      }
 }
