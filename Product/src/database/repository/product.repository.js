@@ -47,4 +47,16 @@ class ProductRepository {
           );
         }
       }
+
+      async FindById(){
+        try {
+          return await ProductModel.FindById(id);
+        } catch (error) {
+          throw new APIError(
+            "API Error",
+            STATUS_CODES.INTERNAL_ERROR,
+            "Unable to Find Product"
+          );
+        }
+      }
 }
