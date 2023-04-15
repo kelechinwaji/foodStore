@@ -4,4 +4,5 @@ const UserAuth = require("../controller/middleware/auth")
 module.exports = (app) => {
     const product = new ProductController();
    app.post('/Product/create', product.create)
+   app.get('/category/:type', product.category)
 }
