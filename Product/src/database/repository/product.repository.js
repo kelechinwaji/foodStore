@@ -1,4 +1,4 @@
-const {} = require("../models/product")
+const {ProductModel} = require("../models/product")
 const {ApiError, BadRequestError} = require("../../utils/app.error")
 
 //Database Operations
@@ -32,6 +32,18 @@ class ProductRepository {
             "API Error",
             STATUS_CODES.INTERNAL_ERROR,
             "Unable to Create Product"
+          );
+        }
+      }
+
+      async Products(){
+        try {
+          return await ProductModel.find();
+        } catch (error) {
+          throw new APIError(
+            "API Error",
+            STATUS_CODES.INTERNAL_ERROR,
+            "Unable to Get Products"
           );
         }
       }
