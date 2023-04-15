@@ -37,7 +37,7 @@ class ProductController {
    async selectProduct(req, res){
     try {
         const {ids} = req.body;
-        const results = await service.GetSelectedProducts(ids);
+        const result = await service.GetSelectedProducts(ids);
         return res.json({status: true, data: result})
     } catch (error) {
         return res.json({status: true, data: error})
@@ -45,6 +45,13 @@ class ProductController {
    }
 
 
-
+   async fetchProduct(req, res){
+    try {
+        const result = await service.GetProducts();
+        return res.json({status: true, data: result})
+    } catch (error) {
+        return res.json({status: true, data: error})
+    }
+   }
 
 }
