@@ -6,4 +6,5 @@ module.exports = (app) => {
    app.post('/Product/create', product.create)
    app.get('/category/:type', product.category)
    app.get('/:id', product.fetchDesc)
+   app.post('/ids', product.selectProduct)
 }
