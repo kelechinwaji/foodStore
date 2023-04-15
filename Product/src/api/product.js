@@ -5,4 +5,5 @@ module.exports = (app) => {
     const product = new ProductController();
    app.post('/Product/create', product.create)
    app.get('/category/:type', product.category)
+   app.get('/:id', product.fetchDesc)
 }
