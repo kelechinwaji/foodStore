@@ -14,7 +14,7 @@ class ProductService {
         const productResult = await this.repository.CreateProduct(productInputs)
         return FormateData(productResult);
        } catch (error) {
-        throw new APIError('Data Not found')
+        throw new ApiError('Data Not found')
        }
     }
 
