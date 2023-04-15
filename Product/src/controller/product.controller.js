@@ -24,7 +24,7 @@ class ProductController {
     }
    }
 
-   async fetch(req, res){
+   async fetchDesc(req, res){
     const productId = req.params.id
     try {
         const result = await service.GetProductDescription(productId);
@@ -33,4 +33,6 @@ class ProductController {
         return res.json({status: true, data: error})
     }
    }
+
+
 }
