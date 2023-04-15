@@ -55,6 +55,15 @@ class ProductService {
         }
     }
 
+    async GetSelectedProducts(selectedIds){
+        try {
+            const products = await this.repository.FindSelectedProducts(selectedIds);
+            return FormateData(products);
+        } catch (error) {
+            throw new ApiError('Data Not found')
+        }
+    }
+
     async GetProductById(productId){
         try {
             return await this.repository.FindById(productId)
