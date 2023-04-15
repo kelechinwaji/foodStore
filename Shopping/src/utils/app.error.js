@@ -25,3 +25,15 @@ class AppError extends Error{
         Error.captureStackTrace(this);
     }
 }
+
+// Api Errors
+class ApiError extends AppError {
+    constructor(
+        name,
+        statusCode = STATUS_CODES.INTERNAL_ERROR,
+        description = "Internal Server Error",
+        isOperational = true
+    ){
+        super(name, statusCode, description, isOperational);
+    }
+}
