@@ -32,7 +32,11 @@ const CustomerSchema = new Schema({
         }
     ],
     orders: [ 
-        { type: Schema.Types.ObjectId, ref: 'order', require: true }
+        { 
+            _id: {type: String, required: true},
+            amount: {type: String},
+            date: {type: Date, default: Date.now()}
+         }
     ]
 },{
     toJSON: {
