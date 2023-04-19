@@ -139,15 +139,15 @@ class CustomerRepository {
     }
   }
 
-  async AddCartItem(customerId, product, qty, isRemove) {
+  async AddCartItem(customerId, {_id, name, price, banner}, qty, isRemove) {
     try {
       const profile = await CustomerModel.findById(customerId).populate(
-        "cart.product"
+        "cart"
       );
 
       if (profile) {
         const cartItem = {
-          product,
+          product: {_id, name, price, banner},
           unit: qty,
         };
 
@@ -177,7 +177,7 @@ class CustomerRepository {
 
         const cartSaveResult = await profile.save();
 
-        return cartSaveResult.cart;
+        return cartSaveResult;
       }
 
       throw new Error("Unable to add to cart!");
