@@ -23,7 +23,12 @@ const CustomerSchema = new Schema({
     ],
     wishlist:[
         { 
-            type: Schema.Types.ObjectId, ref: 'product', require: true
+            product: {
+                _id: {type: String, required: true},
+                name: {type: String},
+                banner: {type: String},
+                price: {type: Number}
+              }, 
         }
     ],
     orders: [ 
