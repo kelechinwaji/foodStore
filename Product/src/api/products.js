@@ -67,11 +67,11 @@ module.exports = (app) => {
 
         const { _id } = req.user;
 
-        const {data} = await service.GetProductPayload(_id, {productId: req.body._id}, 'ADD_TO_WISHLIST')
         
         try {
+            const {data} = await service.GetProductPayload(_id, {productId: req.body._id}, 'ADD_TO_WISHLIST')
             PublishCustomerEvent(data);
-            return res.status(200).json(data.data);
+            return res.status(200).json(data.data.product);
         } catch (err) {
             
         }
@@ -83,9 +83,10 @@ module.exports = (app) => {
         const productId = req.params.id;
 
         try {
-            const product = await service.GetProductById(productId);
-            const wishlist = await customerService.AddToWishlist(_id, product)
-            return res.status(200).json(wishlist);
+            const {data} = await service.GetProductPayload(_id, {productId}, 'REMOVE_FROM_WISHLIST')
+
+            PublishCustomerEvent(data)
+            return res.status(200).json(data);
         } catch (err) {
             next(err)
         }
