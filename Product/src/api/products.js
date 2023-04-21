@@ -95,12 +95,12 @@ module.exports = (app) => {
 
     app.put('/cart',UserAuth, async (req,res,next) => {
         
-        const { _id, qty } = req.body;
+        const { _id } = req.body;
         
         try {     
-            const product = await service.GetProductById(_id);
-    
-            const result =  await customerService.ManageCart(req.user._id, product, qty, false);
+            const {data} = await service.GetProductPayload(_id, {productId: req.body._id, qty: req.body.qty}, 'ADD_TO_CART')
+            PublishCustomerEvent(data);
+            PublishShopingEvent(data);
     
             return res.status(200).json(result);
             
