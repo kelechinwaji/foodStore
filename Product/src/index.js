@@ -1,7 +1,12 @@
 const express = require('express');
-const { PORT } = require('./config');
 const { databaseConnection } = require('./database');
 const expressApp = require('./express-app');
+const expressApp = require('./express-app');
+const dotEnv = require('dotenv');
+
+dotEnv.config()
+
+const PORT = process.env.PORT;
 
 const StartServer = async() => {
 
