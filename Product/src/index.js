@@ -1,7 +1,6 @@
 const express = require('express');
 const { databaseConnection } = require('./database');
 const expressApp = require('./express-app');
-const expressApp = require('./express-app');
 const dotEnv = require('dotenv');
 
 dotEnv.config()
