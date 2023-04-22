@@ -1,6 +1,6 @@
 const { CustomerModel, ProductModel, OrderModel, CartModel } = require('../models');
 const { v4: uuidv4 } = require('uuid');
-const { APIError, BadRequestError } = require('../../utils/app-errors')
+const { APIError, BadRequestError, STATUS_CODES } = require('../../utils/app-errors')
 
 
 //Dealing with data base operations
@@ -31,47 +31,51 @@ class ShoppingRepository {
     async AddCartItem(customerId,item,qty,isRemove){
  
         // return await CartModel.deleteMany();
+        try {
+            const cart = await CartModel.findOne({ customerId: customerId })
 
-        const cart = await CartModel.findOne({ customerId: customerId })
-
-        const { _id } = item;
-
-        if(cart){
-            
-            let isExist = false;
-
-            let cartItems = cart.items;
-
-
-            if(cartItems.length > 0){
-
-                cartItems.map(item => {
-                                            
-                    if(item.product._id.toString() === _id.toString()){
-                        if(isRemove){
-                            cartItems.splice(cartItems.indexOf(item), 1);
-                         }else{
-                           item.unit = qty;
+            const { _id } = item;
+    
+            if(cart){
+                
+                let isExist = false;
+    
+                let cartItems = cart.items;
+    
+    
+                if(cartItems.length > 0){
+    
+                    cartItems.map(item => {
+                                                
+                        if(item.product._id.toString() === _id.toString()){
+                            if(isRemove){
+                                cartItems.splice(cartItems.indexOf(item), 1);
+                             }else{
+                               item.unit = qty;
+                            }
+                             isExist = true;
                         }
-                         isExist = true;
-                    }
-                });
-            } 
-            
-            if(!isExist && !isRemove){
-                cartItems.push({product: { ...item}, unit: qty });
+                    });
+                } 
+                
+                if(!isExist && !isRemove){
+                    cartItems.push({product: { ...item}, unit: qty });
+                }
+    
+                cart.items = cartItems;
+    
+                return await cart.save()
+    
+            }else{
+    
+               return await CartModel.create({
+                    customerId,
+                    items:[{product: { ...item}, unit: qty }]
+                })
             }
-
-            cart.items = cartItems;
-
-            return await cart.save()
-
-        }else{
-
-           return await CartModel.create({
-                customerId,
-                items:[{product: { ...item}, unit: qty }]
-            })
+            
+        } catch (error) {
+            throw APIError('API ERROR', STATUS_CODES.INTERNAL_ERROR, 'Unable to add cart items')
         }
 
     
