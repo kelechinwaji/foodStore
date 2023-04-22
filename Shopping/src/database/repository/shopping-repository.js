@@ -87,13 +87,13 @@ class ShoppingRepository {
         //check transaction for payment Status
         
         try{
-            const profile = await CustomerModel.findById(customerId).populate('cart.product');
+            const cart = await CartModel.findOne({customerId: customerId});
     
-            if(profile){
+            if(cart){
                 
                 let amount = 0;   
     
-                let cartItems = profile.cart;
+                let cartItems = cart.items;
     
                 if(cartItems.length > 0){
                     //process Order
@@ -112,14 +112,11 @@ class ShoppingRepository {
                         items: cartItems
                     })
         
-                    profile.cart = [];
+                    cart.items = [];
                     
-                    order.populate('items.product').execPopulate();
                     const orderResult = await order.save();
-                   
-                    profile.orders.push(orderResult);
     
-                    await profile.save();
+                    await cart.save();
     
                     return orderResult;
                 }
