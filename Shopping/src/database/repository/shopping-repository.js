@@ -1,4 +1,4 @@
-const { CustomerModel, ProductModel, OrderModel } = require('../models');
+const { CustomerModel, ProductModel, OrderModel, CartModel } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const { APIError, BadRequestError } = require('../../utils/app-errors')
 
@@ -10,10 +10,21 @@ class ShoppingRepository {
 
     async Orders(customerId){
         try{
-            const orders = await OrderModel.find({customerId }).populate('items.product');        
+            const orders = await OrderModel.find({customerId });        
             return orders;
         }catch(err){
             throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Orders')
+        }
+    }
+
+    async Cart(customerId){
+        try {
+            const cartItems = await CartModel.find({customerId: customerId})
+            if(cartItems){
+                return cartItems;
+            }
+        } catch (error) {
+            throw new Error('Data Not Found!')
         }
     }
  
