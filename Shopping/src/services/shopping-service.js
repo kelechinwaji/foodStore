@@ -65,7 +65,19 @@ class ShoppingService {
         default:
             break;
     }
+ }
 
+ async GetOrderPayload(userId, order, event){
+
+  if(order){
+      const payload = {
+          event: event,
+          data: {userId, order}
+      }
+      return FormateData(payload)
+  } else {
+      return FormateData({error: "No Order available"})
+  }
 }
 }
 
