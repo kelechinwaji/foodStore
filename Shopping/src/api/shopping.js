@@ -1,5 +1,4 @@
 const ShoppingService = require("../services/shopping-service");
-const UserService = require('../services/customer-service');
 const UserAuth = require('./middlewares/auth');
 const { PublishCustomerEvent } = require("../utils");
 
