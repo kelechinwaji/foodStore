@@ -7,6 +7,7 @@ dotEnv.config()
 const APP_SECRET = process.env.APP_SECRET;
 const EXCHANGE_NAME = process.env.EXCHANGE_NAME;
 const MSG_QUEUE_URL = process.env.MSG_QUEUE_URL;
+const MESSAGE_BROKER_URL = process.env.MESSAGE_BROKER_URL;
 
 
 
@@ -84,7 +85,7 @@ module.exports.PublishMessage = async(channel, binding_key, message) => {
 
 //subscribe messages
 module.exports.SubscribeMessage =  async() =>{
-  const appQueue = await channel.assertQueue(QUEUE_NAME);
+  const appQueue = await channel.assertQueue('QUEUE_NAME');
 
   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
 
