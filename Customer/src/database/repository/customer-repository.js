@@ -96,48 +96,50 @@ class CustomerRepository {
     }
   }
 
-  async AddWishlistItem(customerId, {_id, name, desc, price, available, banner}) {
+
+  async AddWishlistItem(customerId, { _id, name, desc, price, available, banner}){
+        
+    const product = {
+        _id, name, desc, price, available, banner
+    };
     
-    const product = {_id, name, desc, price, available, banner};
-    try {
-      const profile = await CustomerModel.findById(customerId).populate(
-        "wishlist"
-      );
+    if(!product._id){
+        throw new Error("Product ID is required");
+    }
 
-      if (profile) {
-        let wishlist = profile.wishlist;
+    const profile = await CustomerModel.findById(customerId).populate('wishlist');
+   
+    if(profile){
 
-        if (wishlist.length > 0) {
-          let isExist = false;
-          wishlist.map((item) => {
-            if (item._id.toString() === product._id.toString()) {
-              const index = wishlist.indexOf(item);
-              wishlist.splice(index, 1);
-              isExist = true;
+         let wishlist = profile.wishlist;
+
+        if(wishlist.length > 0){
+            let isExist = false;
+            wishlist.map(item => {
+                if(item._id.toString() === product._id.toString()){
+                   const index = wishlist.indexOf(item);
+                   wishlist.splice(index,1);
+                   isExist = true;
+                }
+            });
+
+            if(!isExist){
+                wishlist.push(product);
             }
-          });
 
-          if (!isExist) {
+        }else{
             wishlist.push(product);
-          }
-        } else {
-          wishlist.push(product);
         }
 
         profile.wishlist = wishlist;
-      }
-
-      const profileResult = await profile.save();
-
-      return profileResult.wishlist;
-    } catch (err) {
-      throw new APIError(
-        "API Error",
-        STATUS_CODES.INTERNAL_ERROR,
-        "Unable to Add to WishList"
-      );
     }
-  }
+
+    const profileResult = await profile.save();      
+
+    return profileResult.wishlist;
+}
+
+
 
   async AddCartItem(customerId, {_id, name, price, banner}, qty, isRemove) {
     try {

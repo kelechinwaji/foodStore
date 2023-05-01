@@ -111,14 +111,10 @@ class CustomerService {
     }
 
     async AddToWishlist(customerId, product){
-        try {
-            const wishlistResult = await this.repository.AddWishlistItem(customerId, product);        
-           return FormateData(wishlistResult);
-    
-        } catch (err) {
-            throw new APIError('Data Not found', err)
-        }
-    }
+        console.log(customerId, product, 'same');
+        const wishlistResult = await this.repository.AddWishlistItem(customerId, product);        
+       return FormateData(wishlistResult);
+   }
 
     async ManageCart(customerId, product, qty, isRemove){
         try {
@@ -157,9 +153,6 @@ class CustomerService {
                 break;
             case 'CREATE_ORDER':
                 this.ManageOrder(userId,order);
-                break;
-            case 'TEST':
-                console.log("WORKING....subscriber");
                 break;
             default:
                 break;
