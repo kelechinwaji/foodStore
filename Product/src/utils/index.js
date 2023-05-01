@@ -51,7 +51,7 @@ module.exports.FormateData = (data) => {
   }
 };
 
-module.exports.PublishCustomerEvent = async() => {
+module.exports.PublishCustomerEvent = async(payload) => {
 
   axios.post("http://localhost:8080/customer/app-events", {
     payload
@@ -59,7 +59,7 @@ module.exports.PublishCustomerEvent = async() => {
   
 }
 
-module.exports.PublishShopingEvent = async() => {
+module.exports.PublishShopingEvent = async(payload) => {
 
   axios.post("http://localhost:8080/shoping/app-events", {
     payload
