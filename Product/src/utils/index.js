@@ -1,8 +1,14 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const amqplib = require("amqplib")
+const dotEnv = require('dotenv');
+
+dotEnv.config()
+const APP_SECRET = process.env.APP_SECRET;
+const EXCHANGE_NAME = process.env.EXCHANGE_NAME;
+const MSG_QUEUE_URL = process.env.MSG_QUEUE_URL;
 
 
-const { APP_SECRET } = require("../config");
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -51,4 +57,17 @@ module.exports.FormateData = (data) => {
   }
 };
 
+// Message Broker
 
+
+// Create a channel
+module.exports.CreateChannel = async() => {
+  try {
+    const connection = await amqplib.connect(MESSAGE_BROKER_URL)
+    const channel = await connection.createChannel()
+    await channel.assertExchange(EXCHANGE_NAME, 'direct', false);
+    return channel;
+  } catch (error) {
+    throw error
+  }
+}
