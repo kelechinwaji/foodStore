@@ -88,6 +88,7 @@ module.exports.SubscribeMessage =  async() =>{
   const appQueue = await channel.assertQueue('QUEUE_NAME');
 
   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
+  channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
 
   channel.consume(appQueue.queue, data => {
     console.log('received data');
